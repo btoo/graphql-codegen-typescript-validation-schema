@@ -38,6 +38,8 @@ export class ZodSchemaVisitor extends BaseSchemaVisitor {
     super(schema, config);
   }
 
+  readonly typenameOptionality = this.config.nonOptionalTypename ? '' : '.optional()';
+
   importValidationSchema(): string {
     return `import { z } from 'zod'`;
   }
@@ -149,7 +151,7 @@ export class ZodSchemaVisitor extends BaseSchemaVisitor {
                 .withContent(
                   [
                     `z.object({`,
-                    indent(`__typename: z.literal('${node.name.value}').optional(),`, 2),
+                    indent(`__typename: z.literal('${node.name.value}')${this.typenameOptionality},`, 2),
                     shape,
                     '})',
                   ].join('\n'),
@@ -167,7 +169,7 @@ export class ZodSchemaVisitor extends BaseSchemaVisitor {
                 .withBlock(
                   [
                     indent(`return z.object({`),
-                    indent(`__typename: z.literal('${node.name.value}').optional(),`, 2),
+                    indent(`__typename: z.literal('${node.name.value}')${this.typenameOptionality},`, 2),
                     shape,
                     indent('})'),
                   ].join('\n'),

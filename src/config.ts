@@ -327,4 +327,6 @@ export interface ValidationSchemaPluginConfig extends TypeScriptPluginConfig {
    * ```
    */
   directives?: DirectiveConfig
+  /** @see {@link https://github.com/Code-Hex/graphql-codegen-typescript-validation-schema/issues/507#issuecomment-2591689136} */
+  nonOptionalTypename?: boolean
 }
